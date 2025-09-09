@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Real-Time Analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="video-container">
+    <h2>Camera Feed</h2>
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+  </div>
+
+  <div class="analysis-box">
+    <h3>AI Analysis</h3>
+    <p id="analysis">Loading...</p>
+  </div>
+
+  <script>
+    async function updateAnalysis() {
+      let res = await fetch("/analysis");
+      let data = await res.json();
+      document.getElementById("analysis").innerText = data.analysis;
+    }
+    setInterval(updateAnalysis, 3000);
+  </script>
+</body>
+</html>
